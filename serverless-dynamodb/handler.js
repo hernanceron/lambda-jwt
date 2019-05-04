@@ -37,7 +37,12 @@ module.exports.generateToken = (event, context, callback) => {
       callback("Error en getUser " + err.message,null);
     else{
       if(data.Item){
-        const token = authorizer.generateToken(event.body);        
+        let payload = {
+          hash : hash,
+          docNumber: docNumber
+        };
+        //const token = authorizer.generateToken(event.body);        
+        const token = authorizer.generateToken(payload);        
         const response = {
           statusCode: 200,
           body: JSON.stringify({

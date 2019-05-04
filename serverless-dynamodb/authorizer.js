@@ -17,8 +17,8 @@ module.exports.generatePolicy = (token, methodArn,htmlText) => {
 };
 
 module.exports.generateToken = jsonToSign => {
-    var json = JSON.parse(jsonToSign);
-    var token = jwt.sign(jsonToSign, SECRET_KEY, { expiresIn: '1h'});
+    
+    var token = jwt.sign(jsonToSign, SECRET_KEY, { expiresIn: 60});
     console.log(token);
     return token;  
 };
