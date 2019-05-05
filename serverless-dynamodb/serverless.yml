@@ -17,6 +17,11 @@ service: serverless-dynamodb # NOTE: update this with your service name
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
+custom:
+  tableName: Users
+  regionName: us-west-2
+  bucketName: web-42052757-us-west-2
+
 provider:
   name: aws
   runtime: nodejs8.10
@@ -73,6 +78,9 @@ functions:
           path: register
           method: post
           private: true
+    environment:
+      TABLE_NAME: ${self:custom.tableName}
+      REGION_NAME: ${self:custom.regionName}
   information:
     handler: handler.getInformation
     events:
@@ -80,9 +88,12 @@ functions:
           path: information
           method: get
           authorizer: authorize
+    environment:
+      BUCKET_NAME: ${self:custom.bucketName}
   authorize:
     handler: handler.authorize
-
+    environment:
+      TABLE_NAME: ${self:custom.tableName}
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
