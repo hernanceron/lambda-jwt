@@ -11,25 +11,16 @@
 #
 # Happy Coding!
 
-service: serverless-dynamodb # NOTE: update this with your service name
+service: aws-sample-rolename # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 # frameworkVersion: "=X.X.X"
 
-custom:
-  tableName: Users
-  regionName: us-west-2
-  bucketName: web-42052757-us-west-2
-
 provider:
   name: aws
   runtime: nodejs8.10
-  region: us-west-2
-  apiKeys:
-    - myNewApiKey
- 
-
+  
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -65,39 +56,8 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
-    events:
-      - http:
-          path: hello
-          method: get
-          authorizer: authorize 
-    role: CustomAuthorizerRole
-  generateToken:
-    handler: handler.generateToken
-    events:
-      - http:
-          path: register
-          method: post
-          private: true
-    role: CustomAuthorizerRole
-    environment:
-      TABLE_NAME: ${self:custom.tableName}
-      REGION_NAME: ${self:custom.regionName}
-  information:
-    handler: handler.getInformation
-    events:
-      - http:
-          path: information
-          method: get
-          authorizer: authorize
-    role: CustomAuthorizerRole
-    environment:
-      BUCKET_NAME: ${self:custom.bucketName}
-  authorize:
-    handler: handler.authorize
-    role: CustomAuthorizerRole
-    environment:
-      TABLE_NAME: ${self:custom.tableName}
+    handler: handler.holaSample
+    role: MyCustomRole
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -146,11 +106,11 @@ functions:
 #       Value: "Some output value"
 resources:
   Resources:
-    CustomAuthorizerRole:
+    MyCustomRole:
       Type: AWS::IAM::Role
       Properties:
         Path: /
-        RoleName: AuthorizerRole
+        RoleName: MyDefaultRole
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
