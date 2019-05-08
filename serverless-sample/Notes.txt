@@ -1,0 +1,3 @@
+Paso 1: aws iam create-policy --policy-name slspolicy --policy-document file://slsPolicy.json
+Paso 2: aws iam create-user --user-name slsuser
+Paso 3: aws iam attach-user-policy --policy-arn <arn de la politica generada al inicio> --user-name <nombre del usuario>

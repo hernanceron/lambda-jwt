@@ -146,6 +146,27 @@ functions:
 #       Value: "Some output value"
 resources:
   Resources:
+    usersTable:
+      Type:AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:
+          - AttributeName: hash
+            AttributeType: S
+          - AttributeName: docNumber
+            AttributeType: S
+         KeySchema:
+          - AttributeName: hash
+            KeyType: HASH
+          - AttributeName: docNumber
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    MyCustomS3:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucketName}
     CustomAuthorizerRole:
       Type: AWS::IAM::Role
       Properties:
